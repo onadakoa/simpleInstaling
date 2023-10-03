@@ -11,7 +11,7 @@ const check_display = function (el: any) {
 };
 // finish: finish_page
 (async () => {
-  const browser = await puppeteer.launch({headless: false})
+  const browser = await puppeteer.launch({headless: user.headless})
   const page = await browser.newPage()
 
   await page.goto("https://instaling.pl/teacher.php?page=login")
