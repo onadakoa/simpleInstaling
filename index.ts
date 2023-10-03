@@ -1,7 +1,6 @@
 import puppeteer, {Browser, ElementHandle, Page} from "puppeteer"
 import user from "./config"
 
-//const startButton = "#continue_session_button";
 let startButton = "#continue_session_button";
 
 let window : any;
@@ -29,6 +28,14 @@ const check_display = function (el: any) {
 
   await page.waitForNavigation()
   await delay(200);
+
+  let url = await page.url().slice("https://instaling.pl/".length);
+  if (!url.startsWith("student")) {
+    console.error("Wrong password/login!\nor server error?")
+
+    browser.close();
+    return;
+  }
 
   //let start = await page.waitForSelector("a.blink_me")
   let start = await page.waitForSelector(".btn-session" )
