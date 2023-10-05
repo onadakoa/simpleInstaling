@@ -1,5 +1,6 @@
 import puppeteer, {Browser, ElementHandle, Page} from "puppeteer"
 import user from "./config"
+import fs from "fs"
 
 let startButton = "#continue_session_button";
 
