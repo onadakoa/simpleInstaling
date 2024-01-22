@@ -37,9 +37,12 @@ const check_display = function (el: any) {
     return;
   }
 
-  //let start = await page.waitForSelector("a.blink_me")
+  console.log("waiting for .btn-session selector")
+  await delay(300);
   let start = await page.waitForSelector(".btn-session" )
   await start?.click()
+
+  await delay(300);
 
   await page.waitForNavigation()
   await delay(500);
