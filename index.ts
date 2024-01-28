@@ -17,6 +17,7 @@ const check_display = function (el: any) {
 
   // await page.waitForNavigation()
   await delay(500);
+  await delay(5000);
 
   let email = await page.waitForSelector("#log_email");
   await email?.type(user.login)
@@ -38,14 +39,19 @@ const check_display = function (el: any) {
   }
 
   console.log("waiting for .btn-session selector")
-  await delay(300);
-  let start = await page.waitForSelector(".btn-session" )
-  await start?.click()
+  await delay(200);
+  // let start = await page.waitForSelector(".btn-session.btn.sesion.blink_me");
+  (await page.$(".btn-session.btn.sesion.blink_me"))?.click()
+  await delay(500)
+  // console.log(await start!.getProperty("href"))
+  // await start!.click()
+  console.log("start")
 
-  await delay(300);
 
-  await page.waitForNavigation()
-  await delay(500);
+  // await delay(500);
+  await page.waitForNavigation({waitUntil: "load", timeout: 3000}).catch(err => {
+    console.error("couldn't wait for navigation")
+  })
 
   
 
