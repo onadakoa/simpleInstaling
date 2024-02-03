@@ -15,9 +15,10 @@ const check_display = function (el: any) {
 
   await page.goto("https://instaling.pl/teacher.php?page=login");
 
-  // await page.waitForNavigation()
   await delay(500);
-  await delay(5000);
+  let consestButton = await page.waitForSelector(".fc-cta-consent", {timeout: 5000});
+  await consestButton?.click();
+  await delay(500)
 
   let email = await page.waitForSelector("#log_email");
   await email?.type(user.login);
@@ -38,9 +39,8 @@ const check_display = function (el: any) {
   }
 
   console.log("waiting for .btn-session selector");
-  await delay(200);
-  // let start = await page.waitForSelector(".btn-session.btn.sesion.blink_me");
-  let start = await page.$(".btn-session.btn.sesion.blink_me");
+  await delay(500);
+  let start = await page.$(".btn-session.btn.sesion");
   let link = await (await start?.getProperty("href"))?.jsonValue()
 
   console.log(link)
@@ -152,7 +152,7 @@ async function beginTest(page: Page, browser: Browser) {
       word_list.push({ translation: translation, word: word });
     }
     await delay(1000);
-    console.log("check_end: " + await check_end());
+    // console.log("check_end: " + await check_end());
     if (!await check_end()) continue;
     await page.waitForSelector("div#nextword", { visible: true });
     await (await page.$("div#nextword"))!.click();
