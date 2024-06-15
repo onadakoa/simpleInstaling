@@ -16,8 +16,14 @@ const check_display = function (el: any) {
   await page.goto("https://instaling.pl/teacher.php?page=login");
 
   await delay(500);
-  let consestButton = await page.waitForSelector(".fc-cta-consent", {timeout: 5000});
-  await consestButton?.click();
+  try {
+
+    let consestButton: ElementHandle | null = await page.waitForSelector(".fc-cta-consent", { timeout: 5000 });
+    console.log(consestButton)
+    await consestButton?.click();
+  } catch (e) {
+    console.log("can't wait for '.fc-cta-consent' button <IGNORED>")
+  }
   await delay(500)
 
   let email = await page.waitForSelector("#log_email");
@@ -62,7 +68,7 @@ const check_display = function (el: any) {
       "#loading",
       `!(${check_display.toString()})(document.querySelector('#loading'))`,
     )
-  ) {} // loading screen secure
+  ) { } // loading screen secure
 
   let ssp = await page.$eval(
     "#start_session_page",
