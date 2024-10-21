@@ -116,6 +116,17 @@ function getTranslation(translation: string, array: word[]): word | null {
   }
   return null;
 }
+async function divCheck(page: Page) {
+  try {
+    await page.waitForSelector("div#check", { timeout: 5000 });
+    await (await page.$("div#check"))?.click();
+    console.log("check")
+  } catch (e) {
+    await page.waitForSelector("div#check_answer", { timeout: 5000 }).catch((res) => { });
+    await (await page.$("div#check_answer"))?.click();
+    console.log("check_answer")
+  }
+}
 
 async function beginTest(page: Page, browser: Browser) {
   let word_list: word[] = [];
@@ -144,12 +155,11 @@ async function beginTest(page: Page, browser: Browser) {
 
       await delay(1000);
       if (!await check_end()) continue;
-      await page.waitForSelector("div#check", { visible: true });
-      await (await page.$("div#check"))!.click();
+      divCheck(page);
     } else {
       await delay(500);
-      await page.waitForSelector("div#check");
-      await (await page.$("div#check"))!.click();
+      divCheck(page)
+      // await (await page.$("div#check"))!.click();
 
       await delay(200);
       await page.waitForSelector("div#word");
