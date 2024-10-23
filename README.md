@@ -1,4 +1,4 @@
-## InstaLing simple AutoBot
+## Simple InstaLing bot 
 
 
 ### Config
