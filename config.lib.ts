@@ -1,4 +1,4 @@
-export type headless = "new" | boolean | undefined;
+export type headless = "shell" | boolean;
 export interface structure {
   login: string,
   password: string,

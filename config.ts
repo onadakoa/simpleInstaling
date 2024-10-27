@@ -1,4 +1,4 @@
-import {structure, headless} from "./config.lib"
+import { structure, headless } from "./config.lib"
 
 
 
@@ -11,9 +11,10 @@ const out: structure = {
 
 
   // "headless" determines when browser should be shown to user.
-  // "new" - don't show
-  // false - show
-  headless: "new" 
+  // true - don't show
+  // false - show 
+  // "shell" - don't show
+  headless: true
 }
 
 export default out;

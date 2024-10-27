@@ -10,7 +10,10 @@ const check_display = function (el: any) {
 };
 // finish: finish_page
 (async () => {
-  const browser = await puppeteer.launch({ headless: user.headless });
+  const browser = await puppeteer.launch({
+    headless: user.headless,
+    args: [(process.env.OS == "docker") ? "--no-sandbox" : ""]
+  });
   const page = await browser.newPage();
 
   await page.goto("https://instaling.pl/teacher.php?page=login");
@@ -170,11 +173,14 @@ async function beginTest(page: Page, browser: Browser) {
     await delay(1000);
     // console.log("check_end: " + await check_end());
     if (!await check_end()) continue;
-    await page.waitForSelector("div#nextword", { visible: true });
-    await (await page.$("div#nextword"))!.click();
+    try {
+      await page.waitForSelector("div#nextword", { visible: true });
+      await (await page.$("div#nextword"))!.click();
+    } catch (e) {
+      console.error("error occured")
+    }
   }
 
   console.log(word_list);
-  page.close();
-  browser.close();
+  browser.close().catch(() => console.error("couldn't close the browser"));
 }
