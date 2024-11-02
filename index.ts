@@ -29,10 +29,12 @@ const check_display = function (el: any) {
   }
   await delay(500)
 
+  console.log("login> ", process.env.login || user.login);
+
   let email = await page.waitForSelector("#log_email");
-  await email?.type(user.login);
+  await email?.type(process.env.login || user.login);
   let password = await page.waitForSelector("#log_password");
-  await password?.type(user.password);
+  await password?.type(process.env.password || user.password);
   let sub = await page.waitForSelector("button[type=submit]");
   await sub?.click();
 
@@ -158,7 +160,15 @@ async function beginTest(page: Page, browser: Browser) {
 
       await delay(1000);
       if (!await check_end()) continue;
-      divCheck(page);
+      await divCheck(page);
+      await delay(500);
+      let result = await page.$eval("#answer_result>div", (e: HTMLDivElement) => e.classList[0])
+      if (result == "red") {
+        console.warn("found incorrectly word")
+        word_list.splice(word_list.indexOf(wr), 1);
+      } else {
+        console.log("correct")
+      }
     } else {
       await delay(500);
       divCheck(page)
