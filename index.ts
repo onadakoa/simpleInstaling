@@ -93,7 +93,7 @@ const check_display = function (el: any) {
   console.log("starting session");
   await page.evaluate(`document.querySelector('${startButton}').click();`);
   await delay(100);
-  await page.waitForSelector(".translations");
+  await page.waitForSelector(".translation").catch(err => console.error("can't find .translation selector"));
 
   setTimeout(beginTest, 2000, page, browser);
   //beginTest(page);
@@ -146,8 +146,8 @@ async function beginTest(page: Page, browser: Browser) {
   while (await check_end()) {
     i++;
     await delay(250);
-    await page.waitForSelector("div.translations");
-    let translation = await page.$eval(".translations", (el) => el.innerHTML);
+    await page.waitForSelector("div.translation");
+    let translation = await page.$eval(".translation", (el) => el.innerHTML);
 
     console.log("loop: ", i);
 
