@@ -49,9 +49,9 @@ const check_display = function (el: any) {
     return;
   }
 
-  console.log("waiting for .btn-session selector");
+  console.log("waiting for .btn");
   await delay(500);
-  let start = await page.$(".btn-session.btn.sesion");
+  let start = await page.$(".btn");
   let link = await (await start?.getProperty("href"))?.jsonValue()
 
   console.log(link)
