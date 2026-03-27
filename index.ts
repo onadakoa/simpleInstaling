@@ -5,7 +5,7 @@ let startButton = "#continue_session_button";
 
 let window: any;
 
-const check_display = function (el: any) {
+const check_display = function(el: any) {
   return el.style.display == "none";
 };
 // finish: finish_page
@@ -21,8 +21,7 @@ const check_display = function (el: any) {
   await delay(500);
   try {
 
-    let consestButton: ElementHandle | null = await page.waitForSelector(".fc-cta-consent", { timeout: 5000 });
-    console.log(consestButton)
+    let consestButton: ElementHandle | null = await page.waitForSelector(".fc-cta-consent, .cmptxt_btn_yes", { timeout: 5000 });
     await consestButton?.click();
   } catch (e) {
     console.log("can't wait for '.fc-cta-consent' button <IGNORED>")
